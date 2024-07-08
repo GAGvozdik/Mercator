@@ -273,7 +273,7 @@ function App() {
             </ListItem>
 
 
-            {/* <ListItem key={'Catalog'} disablePadding sx={{ display: 'block' }} >
+            <ListItem key={'Catalog'} disablePadding sx={{ display: 'block' }} >
             
               <Divider />
 
@@ -300,7 +300,7 @@ function App() {
                     </>
                   }
 
-            </ListItem> */}
+            </ListItem>
          
 
             

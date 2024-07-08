@@ -7,6 +7,15 @@ import "leaflet/dist/leaflet.css";
 import theme from './theme';
 
 
+
+
+
+
+
+
+
+
+
 export default function MainMap() {
   
   const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
@@ -21,20 +30,36 @@ export default function MainMap() {
       [51.52, 15],
     ];
 
+
+    const [myMap, setmyMap] = useState<null | any>(null); 
+
+    useEffect(() => {
+      // fetch('http://127.0.0.1:5000/')
+      fetch('http://127.0.0.1:5000/static/s1.json')
+      .then(response => response.json())
+      // .then(response => response.text())
+      .then(commits => setmyMap(commits));
+
+    }, []);
+    // lazy initialization
+
+
   
+
     return (
       <div style={{ width: '100vw', height: '100vh' }}>
-  
+        
   <MapContainer zoom={2.6} center={[70, 50]} style={{ height: '100%' }} zoomControl={false}>
   
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
   
           {/* <Polygon positions={polygon} color={"blue"} /> */}
   
-          <GeoJSON 
-            data={oceanPoly} 
+          {myMap && <GeoJSON 
+            data={myMap}
             style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
-            />
+            /> 
+          }
   
           {/* <ImageOverlay
               url={'../../src/data/output.tiff'}
