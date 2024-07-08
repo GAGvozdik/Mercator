@@ -43,6 +43,11 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import FolderIcon from '@mui/icons-material/Folder';
 import { useState } from 'react';
 import RectangleOutlinedIcon from '@mui/icons-material/RectangleOutlined';
+import FileUploadComponent from '../src/components/loader';
+
+
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 
 const drawerWidth = 350;
@@ -158,7 +163,7 @@ function App() {
 
 
     <div className="App" >
-
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
       <Box>
 
@@ -331,7 +336,8 @@ function App() {
                 </div>
               ) : (
                 <div>
-                  <MapWithPolygons /> 
+                  {/* <MapWithPolygons />  */}
+                  <FileUploadComponent />
                 </div>
               )
             } 
@@ -343,6 +349,8 @@ function App() {
     </Box>
 
       </ThemeProvider>
+
+    </Provider>
     </div>
   );
 }

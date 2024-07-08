@@ -12,13 +12,174 @@
 
         <title>Folium Map</title>
 
+        <script>
+            function function1() {
+
+                var data = $("[name='form1']").serialize();
+                $.ajax({
+                    url: "{{ url_for('index', _=current_time) }}",
+                    type: "POST",
+                    async: true,
+                    cache: false,
+                    data: data,
+                    success: function(data){
+                        var checkbox=document.getElementById('input_id');
+
+                        document.getElementById('iframeid').contentWindow.location.reload();
+                    }
+                });
+
+            }
+
+            $('document').ready(function () {
+                var trigger = $('#hamburger'),
+                    isClosed = true;
+
+                trigger.click(function () {
+                  burgerTime();
+                });
+
+                function burgerTime() {
+                  if (isClosed == true) {
+                    trigger.removeClass('is-open');
+                    trigger.addClass('is-closed');
+                    isClosed = false;
+                  } else {
+                    trigger.removeClass('is-closed');
+                    trigger.addClass('is-open');
+                    isClosed = true;
+                  }
+                }
+
+            });
+
+            $(document).ready(function() {
+              $(".btn1").click(function() {
+                $(".side-panel").slideToggle();
+              });
+            });
+
+        </script>
 
     </head>
 
     <body>
-        rhdоаоае
 
-        {{title}}
+        <ul class="top_menu_ul">
+            <li class="top_menu_li"><button class="btn1" id="my_addlayer">Add layer</button></li>
+        </ul>
+
+
+        <div class="side-panel">
+
+
+
+            <form method="POST" class="my_form" action="{{url_for('insert_data')}}">
+                <h3>ADD LAYER</h3>
+
+                <input class='my_input' placeholder="enter filename ..." name="lyrname"/>
+                <p>
+
+                <input class='my_input' placeholder="way ..." name="lyrway"/>
+                <p>
+
+                <input class='my_input' placeholder="folder to save ..." name="my_folder"/>
+                <p>
+
+                <select class="" name="type_select">
+                    <option selected disabled>Choose type</option>
+                    <option method="POST">
+                        raster
+                    </option>
+                    <option method="POST">
+                        poly
+                    </option>
+                    <option method="POST">
+                        lines
+                    </option>
+                    <option method="POST">
+                        points
+                    </option>
+                </select>
+                <p>
+                <p><input type="submit" class="btn btn-default button" value="Add layer" />
+            </form>
+
+            <div class="my_div_br">
+                <br class="my_br">data\\lyr\\1SredPer1.flt.lyr
+                <br class="my_br">C:\Users\g.gvozdik\Desktop\selfedu\data\lyr\poly.lyr
+                <br class="my_br">C:\Users\g.gvozdik\Desktop\selfedu\data\lyr\simple_lines2.lyr
+                <br class="my_br">C:\Users\g.gvozdik\Desktop\selfedu\data\lyr\1SredPer2iso.lyr
+                <br class="my_br">C:\Users\g.gvozdik\Desktop\selfedu\data\lyr\stretched_raster.lyr
+                <br class="my_br">C:\Users\g.gvozdik\Desktop\selfedu\data\lyr\1SredPer2.flt.lyr
+            </div>
+
+            <div id="inputPreview">
+                <input name="cssCheckbox" id="demo_opt_1" type="checkbox" class="css-checkbox">
+                <label for="demo_opt_1">Option 1</label>
+            </div>
+
+        </div>
+
+
+        <div class="right_menu">
+
+            <form class="" action="this.form.submit();" method="POST" name="form1">
+                <h3>CATALOG</h3>
+
+
+            {%- for key, value in dictionary.items() recursive -%}
+                <div class="toggler">{{ key }}</div>
+                {%- if value -%}
+                    <ul class="toggler-target">
+                        {{ loop(value.items()) }}
+                        {%- for c in raster_names -%}
+                            {%- if c.folder == key -%}
+                                <div>
+                                    <input type="checkbox" id="input_id" name="checkboxList[]" onclick="function1();" value="{{c.name}}">
+                                    <label for="checkboxList[]">{{c.name}}</label>
+                                </div>
+                            {%- endif -%}
+                        {%- endfor -%}
+
+                    </ul>
+
+                {%- endif -%}
+            {%- endfor -%}
+
+            </form>
+
+        </div>
+
+        <div class="content">
+            <iframe class="map myframe",
+                    id="iframeid",
+                    src="{{ url_for('static', filename='map.html') }}",
+                    width="700",
+                    height="400">
+            </iframe>
+        </div>
+
+
+
+        <script>
+            const todos = document.querySelectorAll(".todo");
+            const togglers = document.querySelectorAll(".toggler");
+
+            todos.forEach((todo) => {
+              todo.addEventListener("click", () => {
+                todo.classList.toggle("active");
+              });
+            });
+
+            togglers.forEach((toggler) => {
+              toggler.addEventListener("click", () => {
+                toggler.classList.toggle("active");
+                toggler.nextElementSibling.classList.toggle("active");
+              });
+            });
+        </script>
+
     </body>
 
 </html>

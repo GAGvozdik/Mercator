@@ -7,20 +7,23 @@ import "leaflet/dist/leaflet.css";
 import theme from './theme';
 
 
+import { useAppSelector } from '../redux/hooks';
 
 
 
+// import { useAppSelector } from '../redux/hooks';
 
+// const way = useAppSelector(state => state.way);
 
-
-
+// <p>Random Number from Store: {way}</p>
 
 
 export default function MainMap() {
   
-  const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
+  // const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
   // const oceanPoly: FeatureCollection = require('../../src/data/s2.json');
-  
+
+
 
     const bounds: L.LatLngBoundsExpression = [[54.975, 29.975], [80.025, 100.025]];
 
@@ -29,19 +32,22 @@ export default function MainMap() {
       [70.52, 55],
       [51.52, 15],
     ];
+  // Получаем `way` из Redux
+  const way = useAppSelector(state => state.way);
 
+  // Состояние для данных GeoJSON
+  const [myMap, setMyMap] = useState<FeatureCollection | null>(null);
 
-    const [myMap, setmyMap] = useState<null | any>(null); 
+  useEffect(() => {
+    // Проверка, что `way` не null
+    if (way) {
+      fetch(way) 
+        .then(response => response.json()) 
+        .then(data => setMyMap(data as FeatureCollection)); // Преобразуем в FeatureCollection
+        console.log(myMap);
+    }
+  }, [way]); // Зависимость от `way`
 
-    useEffect(() => {
-      // fetch('http://127.0.0.1:5000/')
-      fetch('http://127.0.0.1:5000/static/s1.json')
-      .then(response => response.json())
-      // .then(response => response.text())
-      .then(commits => setmyMap(commits));
-
-    }, []);
-    // lazy initialization
 
 
   
@@ -56,6 +62,7 @@ export default function MainMap() {
           {/* <Polygon positions={polygon} color={"blue"} /> */}
   
           {myMap && <GeoJSON 
+            key={JSON.stringify(myMap)} // Добавляем ключ
             data={myMap}
             style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
             /> 

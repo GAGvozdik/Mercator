@@ -11,6 +11,13 @@ import "leaflet/dist/leaflet.css";
 import theme from './theme';
 
 
+import { useAppSelector } from '../redux/hooks';
+
+
+
+// <p>Random Number from Store: {way}</p>
+
+
 const MAX_ZOOM = 16;
 const TILE_SIZE = 512;
 
@@ -34,19 +41,30 @@ const ARCTIC_TILES_URL =
   "https://tile.gbif.org/3575/omt/{z}/{x}/{y}@4x.png?style=osm-bright-en";
 
 export default function LambConic() {
+  // Получаем `way` из Redux
+  const way = useAppSelector(state => state.way);
 
-  const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
+  // Состояние для данных GeoJSON
+  const [myMap, setMyMap] = useState<FeatureCollection | null>(null);
+
+  useEffect(() => {
+    // Проверка, что `way` не null
+    if (way) {
+      fetch(way) 
+        .then(response => response.json()) 
+        .then(data => setMyMap(data as FeatureCollection)); // Преобразуем в FeatureCollection
+        console.log(myMap);
+    }
+  }, [way]); // Зависимость от `way`
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-
       <MapContainer
         zoom={2} 
         center={[70, 70]}
         style={{ height: '100%' }}
         crs={ARCTIC_LAEA}
         minZoom={2}
-
       >
 
         <TileLayer
@@ -57,28 +75,20 @@ export default function LambConic() {
           maxZoom={MAX_ZOOM}
         />
 
-        <GeoJSON 
-          data={oceanPoly} 
+
+        {/* {myMap && <GeoJSON 
+          data={myMap}
           style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
-        />
+          /> 
+        }  */}
+
+        {myMap && <GeoJSON 
+          key={JSON.stringify(myMap)} // Добавляем ключ
+          data={myMap}
+          style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
+          /> }
 
       </MapContainer>
-
     </div>
   );
 };
-
-// export default App;
-
-// https://github.com/kartena/Proj4Leaflet/tree/master/examples/image-overlay
-// https://datalanguage.com/blog/arctic-projections-with-leaflet-and-react
-// npm install proj4  
-// npm install --save proj4leaflet
-// npm install proj4leaflet  
-
-// npm i --save-dev @types/proj4leaflet
-
-
-
-
-  

@@ -11,6 +11,11 @@ import FolderIcon from '@mui/icons-material/Folder';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
+
+
+import { useAppDispatch } from '../redux/hooks';
+
+
 const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
   [`& .${treeItemClasses.content}`]: {
     padding: theme.spacing(0.5, 1),
@@ -43,6 +48,19 @@ function EndIcon(props: React.PropsWithoutRef<typeof DisabledByDefaultRoundedIco
 }
 
 export default function BasicSimpleTreeView() {
+
+
+  const dispatch = useAppDispatch();
+
+  interface wayToMap {
+    type: 'way';
+    payload: string;
+  }
+
+  const showMapByID = (way: string) => {
+    dispatch<wayToMap>({ type: 'way', payload: way });
+  };
+
   return (
     <div style={{margin:'15px'}}>
       <SimpleTreeView
@@ -56,19 +74,23 @@ export default function BasicSimpleTreeView() {
         }}
         sx={{ overflowX: 'hidden', minHeight: 270, flexGrow: 1, maxWidth: 400 }}
       >
-
-
         <CustomTreeItem itemId="1" label="Main">
 
           <CustomTreeItem itemId="3" label="Subtree with children">
-            <CustomTreeItem itemId="8" label="Hello" />       
+
+            <CustomTreeItem onClick={() => showMapByID('http://127.0.0.1:5000/static/s1.json')} itemId="8" label="Hello" />       
+            <CustomTreeItem onClick={() => showMapByID('http://127.0.0.1:5000/static/Ocean.json')} itemId="9" label="Hello" />       
+
             <CustomTreeItem itemId="7" label="Sub-subtree with children">
-              <CustomTreeItem itemId="9" label="Child 1" />
-              <CustomTreeItem itemId="10" label="Child 2" />
-              <CustomTreeItem itemId="11" label="Child 3" />
+
+              <CustomTreeItem itemId="10" label="Child 1" />
+
             </CustomTreeItem>
+
           </CustomTreeItem>
+
         </CustomTreeItem>
+        
       </SimpleTreeView>
 
       </div>

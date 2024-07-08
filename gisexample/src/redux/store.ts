@@ -1,0 +1,34 @@
+import { createStore } from 'redux';
+
+// Определяем начальное состояние
+const initialState = {
+  way: 'http://127.0.0.1:5000/static/Ocean.json',
+};
+
+interface wayToMap {
+  type: 'way';
+  payload: string;
+}
+
+interface AppState {
+  way: string;
+}
+
+// Редюсер для обновления состояния
+const rootReducer = (state: AppState = initialState, action: wayToMap): AppState => {
+  switch (action.type) {
+    case 'way':
+      return { ...state, way: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+// Создаем Redux-хранилище
+const store = createStore(rootReducer);
+
+export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

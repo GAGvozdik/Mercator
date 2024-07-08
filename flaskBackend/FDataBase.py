@@ -27,7 +27,7 @@ class FDataBase:
         return []
 
     def getData(self):
-        sql = '''SELECT * FROM data'''
+        sql = '''SELECT * FROM polyShapes'''
         try:
             self.__cur.execute(sql)
             res = self.__cur.fetchall()
