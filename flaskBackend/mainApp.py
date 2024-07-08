@@ -10,6 +10,11 @@ from FDataBase import FDataBase
 import json
 from flask_cors import CORS, cross_origin
 
+
+#TODO lazy load
+#TODO users login auth registr
+#TODO load files
+
 # from parser1 import cut_excess, paste_layer, change_map, change_layer_control
 import time
 # from create_layers import create_raster, create_lines, create_poly
@@ -43,7 +48,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 DEBUG = True
-SECRET_KEY = 'J5@nDdv(0_=^FCCZfjkXxAQ!~~g,.?hiol;jyjjM??&|+\\_8`'
+SECRET_KEY = 'J5@nDdv(0_=^fes3&%|hdfdsHDlrlq~lLl,;~~g,.?hiol;jyjjM??&|+\\_8'
 USERNAME = 'admin'
 PASSWORD = '123'
 
@@ -84,6 +89,8 @@ def get_db():
     return g.link_db
 
 
+##########################################################################################
+
 
 UPLOAD_FOLDER = 'uploads'  # Папка для сохранения загруженных файлов
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -117,17 +124,20 @@ def index():
         parents_list.append(str(i['parentName']))
     level = len(parents_list)
 
-
-
     dictionary = rec(level, dbase.getCatalog(), {}, 'static', level)
 
-    # Указываем путь к файлу, в который мы хотим сохранить JSON
-    file_path = 'C:\\Users\\Fenek\\Desktop\\00_programs\\react-js\\29_flask_plus_react\\Mercator\\flaskBackend\\static\\tree.json'
 
-    # Записываем словарь в JSON файл
+    file_path = 'C:\\Users\\Fenek\\Desktop\\00_programs\\react-js\\29_flask_plus_react\\Mercator\\flaskBackend\\static\\tree.json'
     with open(file_path, 'w') as file:
         json.dump(dictionary, file, indent=4)
 
+    file_path = 'C:\\Users\\Fenek\\Desktop\\00_programs\\react-js\\29_flask_plus_react\\Mercator\\flaskBackend\\static\\rasterData.json'
+    raseterData = []
+    with open(file_path, 'w') as file:
+        for i in dbase.getData():
+            raseterData.append({'folder': i['folder'], 'way': i['way'], 'name': i['name']})
+        json.dump(raseterData, file, indent=4)
+
 
     return render_template('index.html',
                            dictionary=rec(level, dbase.getCatalog(), {}, 'static', level),
@@ -136,22 +146,6 @@ def index():
                            current_time=int(time.time()))
 
 
-
-@app.route('/catalog', methods=['POST', 'GET'])
-def catalog():
-    # a = request.form['lyrname']
-
-
-    parents_list = []
-    for i in dbase.getCatalog():
-        parents_list.append(str(i['parentName']))
-    level = len(set(parents_list))
-
-    return render_template('index.html',
-                           dictionary=rec(level, dbase.getCatalog(), {}, 'static', level),
-                           raster_names=dbase.getData(),
-                           catalog=dbase.getTableName()[1:],
-                           current_time=int(time.time()))
 
 
 @app.route('/insert_data', methods=['POST', 'GET'])

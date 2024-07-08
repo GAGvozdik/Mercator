@@ -21,27 +21,29 @@ function FileUploadComponent(){
   const way = useAppSelector(state => state.way);
 
 
+  const port = 3000; // Пример порта, который вы хотите использовать
+
+  const instance = axios.create({
+    baseURL: 'http://localhost:5000'
+  });
+  
   const handleUpload = async () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile);
-
+  
       try {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
+        const response = await instance.post('/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         });
-
-        if (response.ok) {
-          console.log('Файл успешно загружен!');
-          // Добавьте обработку успешной загрузки (например, очистка состояния, показ сообщения)
-        } else {
-          console.error('Ошибка загрузки файла!');
-          // Добавьте обработку ошибки (например, показ сообщения об ошибке)
-        }
+  
+        console.log('Файл успешно загружен!');
+        // Добавьте обработку успешной загрузки (например, очистка состояния, показ сообщения)
       } catch (error) {
-        console.error('Ошибка запроса:', error);
-        // Добавьте обработку ошибки запроса (например, показ сообщения об ошибке)
+        console.error('Ошибка загрузки файла:', error);
+        // Добавьте обработку ошибки загрузки (например, показ сообщения об ошибке)
       }
     } else {
       console.error('Выберите файл для загрузки!');
@@ -60,3 +62,6 @@ function FileUploadComponent(){
 };
 
 export default FileUploadComponent;
+
+
+

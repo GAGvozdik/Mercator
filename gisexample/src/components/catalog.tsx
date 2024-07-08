@@ -116,36 +116,32 @@ export default function BasicSimpleTreeView() {
 
   }, []); 
   
-  // const [d, setD] = useState(null);
-
-  // useEffect(() => {
-  //   // Проверка, что way не null
-  //   // if (myTree) {
-  //       const fetchData = async () => {
-  //           const response = await fetch('http://127.0.0.1:5000/static/tree.json');
-  //           const data = await response.json();
-  //           setD(data);
-  //       // };
-
-  //       fetchData();
-
-  //       console.log('---------------------------------');
-  //       console.log(d);
-  //       console.log('---------------------------------');
-  //   }
-
-  //   }, []);
-
-
 
   // let dictionary = {'static': {'rasters': {}, 'poly': {'ocean': {}}, 'points': {}}};
 
-  const rasterData: RasterData[] = [
-    { folder: 'static', way: 'http://127.0.0.1:5000/static/s1.json', name: 's1.json' },
-    { folder: 'static', way: 'http://127.0.0.1:5000/static/Ocean.json', name: 'Ocean.json' },
-    // ... другие растеры 
-  ]; 
 
+  const [rasterData, setRasterData] = useState<RasterData[]>([]);
+
+  // const rasterData: RasterData[] = [
+  //   { folder: 'static', way: 'http://127.0.0.1:5000/static/s1.json', name: 's1.json' },
+  //   { folder: 'static', way: 'http://127.0.0.1:5000/static/Ocean.json', name: 'Ocean.json' },
+  // ]; 
+
+
+  useEffect(() => {
+    // Проверка, что `way` не null
+    if ('http://127.0.0.1:5000/static/rasterData.json') {
+      fetch('http://127.0.0.1:5000/static/rasterData.json') 
+        .then(response => response.json()) 
+        .then(data => setRasterData(data));
+    }   console.log(rasterData);
+
+  }, []); 
+  
+
+
+
+  
 
   return (
     <div style={{margin:'15px'}}>

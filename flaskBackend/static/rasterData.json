@@ -1,0 +1,17 @@
+[
+    {
+        "folder": "poly",
+        "way": "http://127.0.0.1:5000/static/s1.json",
+        "name": "map1"
+    },
+    {
+        "folder": "poly",
+        "way": "http://127.0.0.1:5000/static/s1.json",
+        "name": "map2"
+    },
+    {
+        "folder": "poly",
+        "way": "http://127.0.0.1:5000/static/Ocean.json",
+        "name": "map3"
+    }
+]

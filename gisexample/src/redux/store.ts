@@ -13,6 +13,7 @@ interface wayToMap {
 interface AppState {
   way?: string;
   catalog?: string;
+  rasterData?: string;
 }
 
 // Редюсер для обновления состояния
@@ -22,6 +23,8 @@ const rootReducer = (state: AppState = initialState, action: wayToMap): AppState
       return { ...state, way: action.payload };
     case 'catalog':
       return { ...state, catalog: action.payload };
+    case 'rasterData':
+      return { ...state, rasterData: action.payload };
     default:
       return state;
   }
