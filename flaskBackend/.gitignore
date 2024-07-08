@@ -1,0 +1,11 @@
+# dependencies
+.idea/
+.vscode/
+.mercatorEnv*/
+mercatorEnv*/
+__pycache__/
+dist/
+.coverage*
+htmlcov/
+.tox/
+docs/_build/
