@@ -6,12 +6,13 @@ const initialState = {
 };
 
 interface wayToMap {
-  type: 'way';
+  type: string;
   payload: string;
 }
 
 interface AppState {
-  way: string;
+  way?: string;
+  catalog?: string;
 }
 
 // Редюсер для обновления состояния
@@ -19,10 +20,18 @@ const rootReducer = (state: AppState = initialState, action: wayToMap): AppState
   switch (action.type) {
     case 'way':
       return { ...state, way: action.payload };
+    case 'catalog':
+      return { ...state, catalog: action.payload };
     default:
       return state;
   }
 };
+
+
+
+
+
+
 
 
 // Создаем Redux-хранилище

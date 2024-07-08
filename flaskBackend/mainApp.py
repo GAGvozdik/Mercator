@@ -7,7 +7,7 @@ import geopandas as gpd
 import folium
 import sqlite3
 from FDataBase import FDataBase
-
+import json
 from flask_cors import CORS, cross_origin
 
 # from parser1 import cut_excess, paste_layer, change_map, change_layer_control
@@ -111,15 +111,23 @@ def upload_file():
 def index():
 
 
+
     parents_list = []
     for i in dbase.getCatalog():
         parents_list.append(str(i['parentName']))
     level = len(parents_list)
 
 
-    print('--------------------------------------------')
-    print(rec(level, dbase.getCatalog(), {}, 'static', level))
-    print('--------------------------------------------')
+
+    dictionary = rec(level, dbase.getCatalog(), {}, 'static', level)
+
+    # Указываем путь к файлу, в который мы хотим сохранить JSON
+    file_path = 'C:\\Users\\Fenek\\Desktop\\00_programs\\react-js\\29_flask_plus_react\\Mercator\\flaskBackend\\static\\tree.json'
+
+    # Записываем словарь в JSON файл
+    with open(file_path, 'w') as file:
+        json.dump(dictionary, file, indent=4)
+
 
     return render_template('index.html',
                            dictionary=rec(level, dbase.getCatalog(), {}, 'static', level),
@@ -210,10 +218,6 @@ def insert_data():
                            raster_names=dbase.getData(),
                            current_time=int(time.time()),
                            catalog=dbase.getTableName()[1:])
-
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

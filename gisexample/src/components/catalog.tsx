@@ -1,6 +1,9 @@
 import * as React from 'react';
+import {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 
+
+import { useAppSelector } from '../redux/hooks';
 import IndeterminateCheckBoxRoundedIcon from '@mui/icons-material/IndeterminateCheckBoxRounded';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
@@ -10,11 +13,10 @@ import { TreeItem, treeItemClasses } from '@mui/x-tree-view/TreeItem';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-
-
-
 import { useAppDispatch } from '../redux/hooks';
-
+import ShapeLineIcon from '@mui/icons-material/ShapeLine';
+import {  FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
+import { Interface } from 'readline';
 
 const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
   [`& .${treeItemClasses.content}`]: {
@@ -33,66 +35,153 @@ const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
   },
 }));
 
-function ExpandIcon(props: React.PropsWithoutRef<typeof AddBoxRoundedIcon>) {
-  return <AddBoxRoundedIcon {...props} sx={{ opacity: 0.8 }} />;
+
+interface RasterData {
+  folder: string;
+  name: string;
+  way: string;
 }
 
-function CollapseIcon(
-  props: React.PropsWithoutRef<typeof IndeterminateCheckBoxRoundedIcon>,
-) {
-  return <IndeterminateCheckBoxRoundedIcon {...props} sx={{ opacity: 0.8 }} />;
+
+
+interface wayToMap {
+  type: 'way';
+  payload: string;
 }
 
-function EndIcon(props: React.PropsWithoutRef<typeof DisabledByDefaultRoundedIcon>) {
-  return <DisabledByDefaultRoundedIcon {...props} sx={{ opacity: 0.3 }} />;
-}
+const buildTree = (dictionary: Record<string, any> | null, itemId: string, rasterData: RasterData[]): React.ReactNode => {
+  
+
+  if (dictionary === null) {
+      return null; // Возвращаем null, если dictionary равен null
+  }
+
+      return Object.entries(dictionary).map(([key, value]) => {
+      const currentItemId = `${itemId}-${key}`;
+
+
+      const dispatch = useAppDispatch();
+
+      interface wayToMap {
+        type: 'way';
+        payload: string;
+      }
+    
+      const showMapByID = (way: string) => {
+        dispatch<wayToMap>({ type: 'way', payload: way });
+      };
+
+
+
+      return (
+        <CustomTreeItem key={currentItemId} itemId={currentItemId} label={key}>
+          {/* Проверяем, что value - это объект, чтобы избежать ошибки */}
+          {value && typeof value === 'object' && Object.keys(value).length > 0 && (
+            buildTree(value, currentItemId, rasterData) 
+          )}
+
+          {rasterData.filter(r => r.folder === key).map(r => (
+            <CustomTreeItem 
+              slots={{ endIcon: ShapeLineIcon }} 
+              key={r.name} 
+              itemId={`${currentItemId}-${r.name}`} 
+              label={r.name} 
+              onClick={() => showMapByID(r.way)} 
+            />
+          ))}
+        </CustomTreeItem>
+      );
+    });
+};
+
 
 export default function BasicSimpleTreeView() {
 
 
-  const dispatch = useAppDispatch();
 
-  interface wayToMap {
-    type: 'way';
-    payload: string;
-  }
 
-  const showMapByID = (way: string) => {
-    dispatch<wayToMap>({ type: 'way', payload: way });
-  };
+// const dictionary = useAppSelector(state => state.catalog);
+
+
+  // Состояние для данных GeoJSON
+  const [myTree, setMyTree] = useState(null);
+
+  useEffect(() => {
+    // Проверка, что `way` не null
+    if ('http://127.0.0.1:5000/static/tree.json') {
+      fetch('http://127.0.0.1:5000/static/tree.json') 
+        .then(response => response.json()) 
+        .then(data => setMyTree(data));
+    }
+
+  }, []); 
+  
+  // const [d, setD] = useState(null);
+
+  // useEffect(() => {
+  //   // Проверка, что way не null
+  //   // if (myTree) {
+  //       const fetchData = async () => {
+  //           const response = await fetch('http://127.0.0.1:5000/static/tree.json');
+  //           const data = await response.json();
+  //           setD(data);
+  //       // };
+
+  //       fetchData();
+
+  //       console.log('---------------------------------');
+  //       console.log(d);
+  //       console.log('---------------------------------');
+  //   }
+
+  //   }, []);
+
+
+
+  // let dictionary = {'static': {'rasters': {}, 'poly': {'ocean': {}}, 'points': {}}};
+
+  const rasterData: RasterData[] = [
+    { folder: 'static', way: 'http://127.0.0.1:5000/static/s1.json', name: 's1.json' },
+    { folder: 'static', way: 'http://127.0.0.1:5000/static/Ocean.json', name: 'Ocean.json' },
+    // ... другие растеры 
+  ]; 
+
 
   return (
     <div style={{margin:'15px'}}>
       <SimpleTreeView
         aria-label="customized"
-        defaultExpandedItems={['1', '3']}
+        defaultExpandedItems={['0', '1']}
         slots={{
           expandIcon: FolderIcon,
           collapseIcon: FolderOpenIcon,
-          endIcon: EndIcon,
+          endIcon: FolderOpenIcon,
+          // endIcon: EndIcon,
            // endIcon: CheckBoxOutlineBlankIcon,
         }}
         sx={{ overflowX: 'hidden', minHeight: 270, flexGrow: 1, maxWidth: 400 }}
       >
-        <CustomTreeItem itemId="1" label="Main">
 
-          <CustomTreeItem itemId="3" label="Subtree with children">
+        {myTree && buildTree(myTree, '1', rasterData)}
 
-            <CustomTreeItem onClick={() => showMapByID('http://127.0.0.1:5000/static/s1.json')} itemId="8" label="Hello" />       
-            <CustomTreeItem onClick={() => showMapByID('http://127.0.0.1:5000/static/Ocean.json')} itemId="9" label="Hello" />       
-
-            <CustomTreeItem itemId="7" label="Sub-subtree with children">
-
-              <CustomTreeItem itemId="10" label="Child 1" />
-
-            </CustomTreeItem>
-
-          </CustomTreeItem>
-
-        </CustomTreeItem>
-        
       </SimpleTreeView>
-
       </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
