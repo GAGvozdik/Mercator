@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
-
-
+import CustomTooltip from './tooltip';
 import { useAppSelector } from '../redux/hooks';
 import IndeterminateCheckBoxRoundedIcon from '@mui/icons-material/IndeterminateCheckBoxRounded';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
@@ -17,6 +16,9 @@ import { useAppDispatch } from '../redux/hooks';
 import ShapeLineIcon from '@mui/icons-material/ShapeLine';
 import {  FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
 import { Interface } from 'readline';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+
 
 const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
   [`& .${treeItemClasses.content}`]: {
@@ -81,14 +83,24 @@ const buildTree = (dictionary: Record<string, any> | null, itemId: string, raste
           )}
 
           {rasterData.filter(r => r.folder === key).map(r => (
-            <CustomTreeItem 
-              slots={{ endIcon: ShapeLineIcon }} 
-              key={r.name} 
-              itemId={`${currentItemId}-${r.name}`} 
-              label={r.name} 
-              onClick={() => showMapByID(r.way)} 
-            />
+            
+            <CustomTooltip key={r.name} tooltipText="Текст тултипа">
+
+            {/* <Tooltip title="Add" placement="right"> */}
+
+              <CustomTreeItem 
+                slots={{ endIcon: ShapeLineIcon }} 
+                key={r.name} 
+                itemId={`${currentItemId}-${r.name}`} 
+                label={r.name} 
+                onClick={() => showMapByID(r.way)} 
+              />
+
+            {/* </Tooltip> */}
+            </CustomTooltip>
+
           ))}
+
         </CustomTreeItem>
       );
     });
