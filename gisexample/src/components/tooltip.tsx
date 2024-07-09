@@ -4,10 +4,7 @@ import Button from '@mui/material/Button';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-// import styles from './tooltip.module.scss';
-// import styles from './tooltip.scss';
-// import styles from './tooltip.module.css';
-// import styles from './tooltip.css';
+import IconButton from '@mui/material/IconButton';
 
  const styles = require('./tooltip.module.scss');
 
@@ -36,25 +33,30 @@ const CustomTooltip = ({ children, tooltipText }: { children: React.ReactNode; t
           title={
 
             <>
-                <FileUploadIcon 
-                    onClick={handleClose}
-                    
-                >
-                </FileUploadIcon>
+              <IconButton>
+                <FileUploadIcon onClick={handleClose} />
+              </IconButton>
+                
+                <IconButton>
+                  <DeleteIcon onClick={handleClose} />
+                </IconButton>
 
-                <DeleteIcon 
-                    onClick={handleClose}
-                >
-                </DeleteIcon>
-
-                <DriveFileRenameOutlineIcon 
-                    onClick={handleClose}
-                >
-                </DriveFileRenameOutlineIcon>
+                <IconButton>
+                  <DriveFileRenameOutlineIcon onClick={handleClose} />
+                </IconButton>
             </>
 
           }
           placement="right"
+          slotProps={{
+            tooltip: {
+              sx: {
+                color: "#514E6A",
+                backgroundColor: "#E8E8E8",
+              },
+            },
+          }}
+
           onClose={handleClose}
         >
           <div>

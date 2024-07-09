@@ -127,11 +127,11 @@ def index():
     dictionary = rec(level, dbase.getCatalog(), {}, 'static', level)
 
 
-    file_path = 'C:\\Users\\Fenek\\Desktop\\00_programs\\react-js\\29_flask_plus_react\\Mercator\\flaskBackend\\static\\tree.json'
+    file_path = 'C:\\Users\\g.gvozdik\\Desktop\\00_backPfront\\Mercator\\flaskBackend\\static\\tree.json'
     with open(file_path, 'w') as file:
         json.dump(dictionary, file, indent=4)
 
-    file_path = 'C:\\Users\\Fenek\\Desktop\\00_programs\\react-js\\29_flask_plus_react\\Mercator\\flaskBackend\\static\\rasterData.json'
+    file_path = 'C:\\Users\\g.gvozdik\\Desktop\\00_backPfront\\Mercator\\flaskBackend\\static\\rasterData.json'
     raseterData = []
     with open(file_path, 'w') as file:
         for i in dbase.getData():

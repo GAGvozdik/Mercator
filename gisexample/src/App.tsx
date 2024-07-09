@@ -154,13 +154,7 @@ function App() {
 
   };
 
-
-
-
-
-
   return (
-
 
     <div className="App" >
     <Provider store={store}>
@@ -187,12 +181,10 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-
       
     <Drawer
       variant="permanent"
       open={open}
-      
     >
 
         <DrawerHeader >
@@ -202,123 +194,119 @@ function App() {
         </DrawerHeader>
         <Divider />
 
-
-        <List>
-          {/* ['Lambert Conic', 'WGS84', 'Catalog'] */}
-            
-            <ListItem key={'Lambert Conic'} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-              onClick={() => handleListItemClick('Lambert Conic')} // Добавляем обработчик клика
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-              
-                  <CircleOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Lambert Conic'} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-         
-            
-            <ListItem key={'WGS84'} disablePadding>
-              <ListItemButton
-              onClick={() => handleListItemClick('WGS84')} // Добавляем обработчик клика
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  
-                 <RectangleOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary={'WGS84'} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-         
-
-            <ListItem key={'Lambert Conic Zone'} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-              onClick={() => handleListItemClick('Lambert Conic Zone')} // Добавляем обработчик клика
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  
-                  <ChangeHistoryIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Lambert Conic'} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-
-
-            <ListItem key={'Catalog'} disablePadding sx={{ display: 'block' }} >
-            
-              <Divider />
-
-              {isTree == false ? <BasicSimpleTreeView /> : 
-                    <> 
-                      <ListItemButton
-                      onClick={() => setIsTree(!isTree)} // Добавляем обработчик клика
-                        sx={{
-                          minHeight: 48,
-                          justifyContent: open ? 'initial' : 'center',
-                          px: 2.5,
-                        }}
-                      >
-                        <ListItemIcon
-                          sx={{
-                            minWidth: 0,
-                            mr: open ? 3 : 'auto',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <FolderIcon onClick={handleDrawerOpen}/>
-                        </ListItemIcon>
-                      </ListItemButton>
-                    </>
-                  }
-
-            </ListItem>
-         
-
-            
-
-      <Divider />
-      </List>
   
+        <List>
+{/* ['Lambert Conic', 'WGS84', 'Catalog'] */}
+  
+  <ListItem key={'Lambert Conic'} disablePadding sx={{ display: 'block' }}>
+    <ListItemButton
+    onClick={() => handleListItemClick('Lambert Conic')} // Добавляем обработчик клика
+      sx={{
+        minHeight: 48,
+        justifyContent: open ? 'initial' : 'center',
+        px: 2.5,
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: 0,
+          mr: open ? 3 : 'auto',
+          justifyContent: 'center',
+        }}
+      >
+    
+        <CircleOutlinedIcon />
+      </ListItemIcon>
+      <ListItemText primary={'Lambert Conic'} sx={{ opacity: open ? 1 : 0 }} />
+    </ListItemButton>
+  </ListItem>
+
+  
+  <ListItem key={'WGS84'} disablePadding>
+    <ListItemButton
+    onClick={() => handleListItemClick('WGS84')} // Добавляем обработчик клика
+      sx={{
+        minHeight: 48,
+        justifyContent: open ? 'initial' : 'center',
+        px: 2.5,
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: 0,
+          mr: open ? 3 : 'auto',
+          justifyContent: 'center',
+        }}
+      >
+        
+       <RectangleOutlinedIcon />
+      </ListItemIcon>
+      <ListItemText primary={'WGS84'} sx={{ opacity: open ? 1 : 0 }} />
+    </ListItemButton>
+  </ListItem>
+
+
+  <ListItem key={'Lambert Conic Zone'} disablePadding sx={{ display: 'block' }}>
+    <ListItemButton
+    onClick={() => handleListItemClick('Lambert Conic Zone')} // Добавляем обработчик клика
+      sx={{
+        minHeight: 48,
+        justifyContent: open ? 'initial' : 'center',
+        px: 2.5,
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: 0,
+          mr: open ? 3 : 'auto',
+          justifyContent: 'center',
+        }}
+      >
+        
+        <ChangeHistoryIcon />
+      </ListItemIcon>
+      <ListItemText primary={'Lambert Conic'} sx={{ opacity: open ? 1 : 0 }} />
+    </ListItemButton>
+  </ListItem>
+
+
+  <ListItem key={'Catalog'} disablePadding sx={{ display: 'block' }} >
+  
+    <Divider />
+
+    {isTree == false ? <BasicSimpleTreeView /> : 
+          <> 
+            <ListItemButton
+            onClick={() => setIsTree(!isTree)} // Добавляем обработчик клика
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <FolderIcon onClick={handleDrawerOpen}/>
+              </ListItemIcon>
+            </ListItemButton>
+          </>
+        }
+
+  </ListItem>
+
+<Divider />
+</List>
+
+
       </Drawer>
       <Box component="main" >
         <DrawerHeader/>
         
-
-        {/* <MainMap theme={theme} /> */}
 
         {pr == 'WGS84' ? (
 
@@ -356,7 +344,6 @@ function App() {
 }
 
 export default App;
-
 
 
 
