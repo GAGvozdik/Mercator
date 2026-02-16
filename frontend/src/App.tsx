@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 
 // import Header from '../src/components/header'
-import MainMap from '../src/components/map';
-import BasicSimpleTreeView from '../src/components/catalog';
-import MapWithPolygons from './components/oceanMapWGS';
-import LambConic from './components/lambCone';
-import SideMenu from './components/SideMenu';
+import MainMap from './components/projections/map';
+import BasicSimpleTreeView from './components/catalog/catalog';
+import MapWithPolygons from './components/projections/oceanMapWGS';
+import LambConic from './components/projections/lambCone';
+import SideMenu from './components/sideMenu/SideMenu';
 
 
 

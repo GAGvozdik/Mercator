@@ -4,7 +4,7 @@ import L from "leaflet";
 import type { LatLngExpression } from "leaflet";
 import type { FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
 import "leaflet/dist/leaflet.css";
-import oceanPoly from '../../src/data/Ocean.json';
+import oceanPoly from '../../data/Ocean.json';
 
 
 import styles from './map.module.scss';

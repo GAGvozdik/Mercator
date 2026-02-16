@@ -5,7 +5,7 @@ import type{ FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson
 import "leaflet/dist/leaflet.css";
 import "proj4leaflet";
 import * as L from "leaflet";
-import oceanPoly from '../../src/data/Ocean.json';
+import oceanPoly from '../../data/Ocean.json';
 
 
 import styles from './map.module.scss';
