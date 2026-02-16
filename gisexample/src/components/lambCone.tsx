@@ -70,7 +70,6 @@ export default function LambConic() {
 
 // export default App;
 
-// https://github.com/kartena/Proj4Leaflet/tree/master/examples/image-overlay
 // https://datalanguage.com/blog/arctic-projections-with-leaflet-and-react
 // npm install proj4  
 // npm install --save proj4leaflet
