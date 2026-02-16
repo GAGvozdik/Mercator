@@ -1,0 +1,39 @@
+/* App.module.scss */
+
+$drawerWidth: 350px;
+$appBarTransition: 225ms; // theme.transitions.duration.enteringScreen
+$drawerTransitionLeaving: 195ms; // theme.transitions.duration.leavingScreen
+$easingSharp: cubic-bezier(0.4, 0, 0.6, 1);
+
+.root {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; // Prevent scrollbars on the root element
+  background-color: rgba(var(--background-primary)); // Set root background
+  color: rgba(var(--text-primary)); // Set root text color
+}
+
+.appBar {
+  z-index: 1300;
+}
+
+.menuButton {
+  margin-right: 36px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  min-height: 64px; // Approximating theme.mixins.toolbar
+}
+
+.content {
+  flex-grow: 1;
+  // padding: 24px; // Removed as per user request
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+}

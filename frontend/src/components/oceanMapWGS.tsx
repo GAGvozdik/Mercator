@@ -1,20 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON, Polygon, ImageOverlay} from "react-leaflet";
-import { LatLngExpression} from "leaflet";
-import {  FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
+import type { LatLngExpression} from "leaflet";
+import type{ FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
 import "leaflet/dist/leaflet.css";
-import theme from './theme';
-
 import "proj4leaflet";
 import * as L from "leaflet";
+import oceanPoly from '../../src/data/Ocean.json';
 
 
-
+import styles from './map.module.scss';
 
 
 export default function MapWithPolygons() {
-
-  const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
 
   const crs = new L.Proj.CRS(
     'EPSG:25833',
@@ -30,7 +27,7 @@ export default function MapWithPolygons() {
   );
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div className={styles.mapContainer}>
 
       {/* <MapContainer zoom={2.6} center={[70, 70]} style={{ height: '100%' }} zoomControl={false}> */}
 
@@ -45,7 +42,7 @@ export default function MapWithPolygons() {
       />
 
       <GeoJSON 
-          data={oceanPoly} 
+          data={oceanPoly as FeatureCollection} 
           style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
       />
 

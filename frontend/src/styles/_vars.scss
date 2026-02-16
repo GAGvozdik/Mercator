@@ -1,0 +1,89 @@
+/* frontend/src/styles/_vars.scss */
+
+/* 
+  New 12-Color Palette Definition
+  - 4 Grays, 4 Blues, 4 Accents
+*/
+
+// Grays (from light to dark)
+$gray-100: 255, 255, 255; // White
+$gray-300: 179, 179, 179; // Light Gray
+$gray-600: 46, 46, 46; // Medium Gray
+$gray-900: 26, 26, 26;    // Near Black
+$example: rgb(179, 179, 179);
+
+// Blues (from light to dark)
+$blue-100: 75, 177, 255; // Lightest Blue
+$blue-300: 0, 104, 184; // Light Blue
+$blue-600: 0, 78, 137;  // Medium Blue
+$blue-900: 0, 52, 92;   // Dark Blue
+
+
+// Accents
+$accent-brand: 201, 107, 0;   // Orange
+$accent-success: 21, 113, 0;  // Green
+$accent-error: 150, 0, 0;    // Red
+$accent-warning: 0, 199, 152; // Amber
+
+:root {
+    /* Light Theme: blue-gray-white */
+    --color-scheme: light;
+    
+    // Backgrounds
+    --background-primary: #{$gray-100}; // White
+    --background-secondary: #{$gray-300}; // Light Gray
+    --background-tertiary: #{$blue-100}; // Lightest Blue
+    
+    // Text
+    --text-primary: #{$gray-900}; // Near Black
+    --text-secondary: #{$gray-600}; // Medium Gray
+    
+    // Accents & Theme Colors
+    --accent-primary: #{$blue-600}; // Medium Blue
+    --accent-secondary: #{$blue-900}; // Dark Blue
+
+    // Standard Accents
+    --brand-primary: #{$accent-brand};
+    --error-text: #{$accent-error};
+    --success-text: #{$accent-success};
+    --warning-text: #{$accent-warning};
+
+    // Component-specific (example)
+    --page-title-color: #{$blue-900};
+    --slider-thumb-color: #{$blue-600};
+    --tooltip-background-color: #{$gray-100};
+    --button-text-color: #{$gray-100};
+
+    --radio-active: #{$blue-300}; 
+    --radio-unactive: #{$gray-300}; 
+}
+
+.dark {
+    /* Dark Theme: gray-black palette with blue */
+    --color-scheme: dark;
+    
+    // Backgrounds
+    --background-primary: #{$gray-900}; // Near Black
+    --background-secondary: #{$gray-600}; 
+    --background-tertiary: #{$blue-900}; // Dark Blue
+    
+    // Text
+    --text-primary: #{$gray-100}; // White
+    --text-secondary: #{$gray-300}; // Light Gray
+    
+    // Accents & Theme Colors
+    --accent-primary: #{$blue-300}; // Light Blue
+    --accent-secondary: #{$blue-600}; // Medium Blue
+
+    // Standard Accents
+    --brand-primary: #{$accent-brand};
+    --error-text: #{$accent-error};
+    --success-text: #{$accent-success};
+    --warning-text: #{$accent-warning};
+
+    // Component-specific (example)
+    --page-title-color: #{$gray-100};
+    --slider-thumb-color: #{$blue-300};
+    --tooltip-background-color: #{$gray-900};
+    --button-text-color: #{$gray-100};
+}

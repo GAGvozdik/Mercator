@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON, Polygon, Marker, Popup, ImageOverlay} from "react-leaflet";
-import { LatLngExpression } from "leaflet";
+// import type { LatLngExpression } from "leaflet";
 // import theme from '../../src/components/theme';
 import * as L from "leaflet";
 import "proj4leaflet"; 
 // import "leaflet/dist/leaflet.css";
-import {  FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
-import { Theme } from '@mui/material/styles'; 
+import type { FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
+// import type{ Theme } from '@mui/material/styles'; 
 import "leaflet/dist/leaflet.css";
-import theme from './theme';
+import oceanPoly from '../../src/data/Ocean.json';
 
 
 const MAX_ZOOM = 16;
@@ -33,12 +33,13 @@ export const ARCTIC_LAEA = new L.Proj.CRS(
 const ARCTIC_TILES_URL =
   "https://tile.gbif.org/3575/omt/{z}/{x}/{y}@4x.png?style=osm-bright-en";
 
+import styles from './map.module.scss';
+
+
 export default function LambConic() {
 
-  const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
-
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div className={styles.mapContainer}>
 
       <MapContainer
         zoom={2} 
@@ -58,7 +59,7 @@ export default function LambConic() {
         />
 
         <GeoJSON 
-          data={oceanPoly} 
+          data={oceanPoly as FeatureCollection} 
           style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
         />
 

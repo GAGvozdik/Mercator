@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON, Polygon, Marker, Popup, ImageOverlay} from "react-leaflet";
-import L, { LatLngExpression } from "leaflet";
-import {  FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
-import { Theme } from '@mui/material/styles'; 
+import L from "leaflet";
+import type { LatLngExpression } from "leaflet";
+import type { FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
 import "leaflet/dist/leaflet.css";
-import theme from './theme';
+import oceanPoly from '../../src/data/Ocean.json';
+
+
+import styles from './map.module.scss';
 
 
 export default function MainMap() {
-  
-  const oceanPoly: FeatureCollection = require('../../src/data/Ocean.json');
   // const oceanPoly: FeatureCollection = require('../../src/data/s2.json');
   
 
@@ -23,7 +24,7 @@ export default function MainMap() {
 
   
     return (
-      <div style={{ width: '100vw', height: '100vh' }}>
+      <div className={styles.mapContainer}>
   
   <MapContainer zoom={2.6} center={[70, 50]} style={{ height: '100%' }} zoomControl={false}>
   
@@ -32,7 +33,7 @@ export default function MainMap() {
           {/* <Polygon positions={polygon} color={"blue"} /> */}
   
           <GeoJSON 
-            data={oceanPoly} 
+            data={oceanPoly as FeatureCollection} 
             style={{ color: 'red', weight: 2, fillOpacity: 0.5 }} 
             />
   

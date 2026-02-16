@@ -1,0 +1,72 @@
+@import '../styles/vars'; // Corrected import path
+
+/* SideMenu.module.scss */
+
+$drawerWidth: 350px;
+$drawerTransition: 225ms;
+$easingSharp: cubic-bezier(0.4, 0, 0.6, 1);
+
+.sideMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $drawerWidth;
+  height: 100%;
+  
+  // New styles for transparency and blur
+  background-color: rgba(var(--background-primary), 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  border-right: 1px solid rgba(var(--text-secondary), 0.3); // Less intrusive border color
+  border-left: none; // Explicitly remove left border
+
+  box-shadow: 0 8px 10px -5px rgba(0,0,0,.2), 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12);
+  transform: translateX(-100%);
+  transition: transform $drawerTransition $easingSharp;
+  z-index: 1200;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px; // Horizontal padding for all content
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  // padding is now on the parent
+  min-height: 64px; // Match AppBar height
+}
+
+.radioGroupContainer {
+  border: 1px solid rgba(var(--text-secondary), 0.5);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+// Global overrides for MUI components within this module's scope
+:global(.MuiFormLabel-root) {
+    font-family: 'MyRuda', sans-serif !important;
+    color: rgba(var(--text-secondary)) !important; // Changed to text-secondary
+}
+
+:global(.MuiFormControlLabel-label) {
+    font-family: 'MyRuda', sans-serif !important;
+    color: rgba(var(--text-secondary)) !important; // Changed to text-secondary
+}
+
+// Inactive radio button color
+:global(.MuiRadio-root) {
+    color: rgba(var(--radio-unactive)) !important; // Light Gray for both themes
+}
+
+// Active radio button color
+:global(.Mui-checked) {
+    color: rgba(var(--radio-active)) !important; // Light Blue for both themes
+}

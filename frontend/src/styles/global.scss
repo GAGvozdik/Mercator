@@ -1,0 +1,188 @@
+@import 'vars';
+
+// --small-font-size: 0.75rem;
+// --standard-font-size: 1.1rem;
+// --large-font-size: 2.2rem;
+
+@media (max-width: 500px) {
+  :root {
+    --small-font-size: 0.7rem;
+    --standard-font-size: 1rem;
+    --large-font-size: 1.3rem;
+  }
+}
+
+
+$standard-padding: 1vh;
+$bubble-border-radius: 10px;
+
+::selection {
+    background: rgba(var(--accent-tertiary), 1); /* Safari */
+}
+
+::-moz-selection {
+    background: rgba(var(--accent-tertiary), 1); /* Firefox */
+}
+
+@font-face {
+  font-family: "MyRuda";   /*Can be any text*/
+  src: local("Ruda"),
+    url("../assets/fonts/Ruda-VariableFont_wght.ttf") format("truetype");
+}
+
+body {
+    background-color: rgba(var(--background-primary), 1);
+    transition: 0.5s;
+    font-family: "MyRuda !important";
+}
+
+.treeText{
+    color: rgba(var(--text-secondary), 1);
+    font-family: MyRuda !important;
+}
+
+@mixin formComponentStyle {
+    border-radius: 10px;
+    padding: 0.5em;
+    font-size: var(--standard-font-size);
+}
+
+input::placeholder {
+    color: rgba(var(--placeholder-text), 1); /* Цвет текста */
+    font-family: MyRuda !important;
+    font-size: var(--standard-font-size); /* Задайте размер текста */
+}
+
+.link{
+    color: rgba(var(--text-secondary), 1);
+    text-decoration: none;
+    font-family: MyRuda !important;
+    transition: 0.5s;
+    font-weight: 600;
+    font-size: var(--standard-font-size);
+}
+
+.link:hover {
+    text-decoration: none;
+    transition: 0.5s;
+    font-weight: 300;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--scrollbar-thumb), 1) rgba(var(--scrollbar-trace), 1);
+}
+// * {
+//   scrollbar-width: thin;
+//   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-trace) var(--scrollbar-thumb-hover);
+// }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(var(--scrollbar-trace), 1); 
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(var(--scrollbar-thumb), 1); 
+    border-radius: 10px;
+    transition: 0.7s;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--scrollbar-thumb-hover), 1); 
+    transition: 0.7s;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+.my-scrollable {
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.my-scrollable::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+/* === СТИЛИ ДЛЯ ПЛЕЙСХОЛДЕРОВ (placeholder) === */
+
+/* Chrome, Edge, Safari (браузеры на WebKit) */
+input::-webkit-input-placeholder {
+  color: rgba(var(--placeholder-text), 1);          /* Цвет текста placeholder — переменная для "второстепенного" цвета */
+  font-family: 'MyRuda !important';     /* Шрифт для placeholder (но !important внутри кавычек не работает, см. ниже) */
+}
+
+/* Firefox 19+ */
+input::-moz-placeholder {
+  color: rgba(var(--placeholder), 1);          /* Цвет placeholder в новых версиях Firefox */
+  font-family: 'MyRuda !important';     /* Шрифт placeholder */
+}
+
+/* Internet Explorer 10–11 */
+input:-ms-input-placeholder {
+  color: rgba(var(--placeholder-text), 1);          /* Цвет placeholder в старом IE */
+  font-family: 'MyRuda !important';     /* Шрифт placeholder */
+}
+
+/* Firefox 18 и ниже */
+input:-moz-placeholder {
+  color: rgba(var(--placeholder), 1);          /* Цвет placeholder для очень старых версий Firefox */
+  font-family: 'MyRuda !important';     /* Шрифт placeholder */
+}
+
+/* === СТИЛИ ДЛЯ ПОЛЕЙ С АВТОЗАПОЛНЕНИЕМ (autofill) === */
+
+/* Chrome, Edge, Safari */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(var(--placeholder-text), 1) !important;
+  box-shadow: 0 0 0 1000px rgba(var(--placeholder-completed), 0.3) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Firefox */
+input:-moz-autofill {
+  -moz-text-fill-color: rgba(var(--placeholder-text), 1) !important;
+  caret-color: rgba(var(--placeholder-text), 1) !important;
+  box-shadow: 0 0 0 1000px rgba(var(--placeholder-completed), 0.67) inset !important;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.iconRow {
+font-family: MyRuda !important;
+    display: flex;
+    margin-bottom: 1vh;
+    padding: 0vh;
+}
+
+.picture {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px; // Расстояние между картинкой и кнопкой
+}
+
+.downloadButton {
+    padding: 10px 20px;
+    font-size: var(--standard-font-size);
+    color: rgba(var(--white), 1);
+    background-color: rgba(var(--accent-primary), 1);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: rgba(var(--accent-secondary), 1);
+    }
+}
