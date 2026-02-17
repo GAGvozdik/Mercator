@@ -1,4 +1,13 @@
 .mapContainer {
+//   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh; /* или как у тебя */
+
+  /* если хочешь, чтобы ось была чуть ниже верхнего края — меняй тут */
+  --rot-origin-y: 0px;
 }
+
+/* Ключевое: вращаем rotate-pane вокруг top-center */
+// .mapContainer :global(.leaflet-rotate-pane) {
+//   transform-origin: 50% var(--rot-origin-y) !important;
+// }

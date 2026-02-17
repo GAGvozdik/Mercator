@@ -1,76 +1,132 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import React, { useMemo, useState } from 'react';
+// import './index.css';
+import { Input, Tree } from 'antd';
+import type { TreeDataNode } from 'antd';
 
-import IndeterminateCheckBoxRoundedIcon from '@mui/icons-material/IndeterminateCheckBoxRounded';
-import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
-import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
-import { styled, alpha } from '@mui/material/styles';
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import { TreeItem, treeItemClasses } from '@mui/x-tree-view/TreeItem';
-import FolderIcon from '@mui/icons-material/Folder';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+const { Search } = Input;
 
-const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
-  [`& .${treeItemClasses.content}`]: {
-    padding: theme.spacing(0.5, 1),
-    margin: theme.spacing(0.2, 0),
-  },
-  [`& .${treeItemClasses.iconContainer}`]: {
-    '& .close': {
-      opacity: 0.3,
-    },
-  },
-  [`& .${treeItemClasses.groupTransition}`]: {
-    marginLeft: 15,
-    paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
-  },
-}));
+const x = 3;
+const y = 2;
+const z = 1;
+const defaultData: TreeDataNode[] = [];
 
-function ExpandIcon(props: React.PropsWithoutRef<typeof AddBoxRoundedIcon>) {
-  return <AddBoxRoundedIcon {...props} sx={{ opacity: 0.8 }} />;
-}
+const generateData = (_level: number, _preKey?: React.Key, _tns?: TreeDataNode[]) => {
+  const preKey = _preKey || '0';
+  const tns = _tns || defaultData;
 
-function CollapseIcon(
-  props: React.PropsWithoutRef<typeof IndeterminateCheckBoxRoundedIcon>,
-) {
-  return <IndeterminateCheckBoxRoundedIcon {...props} sx={{ opacity: 0.8 }} />;
-}
+  const children: React.Key[] = [];
+  for (let i = 0; i < x; i++) {
+    const key = `${preKey}-${i}`;
+    tns.push({ title: key, key });
+    if (i < y) {
+      children.push(key);
+    }
+  }
+  if (_level < 0) {
+    return tns;
+  }
+  const level = _level - 1;
+  children.forEach((key, index) => {
+    tns[index].children = [];
+    return generateData(level, key, tns[index].children);
+  });
+};
+generateData(z);
 
-function EndIcon(props: React.PropsWithoutRef<typeof DisabledByDefaultRoundedIcon>) {
-  return <DisabledByDefaultRoundedIcon {...props} sx={{ opacity: 0.3 }} />;
-}
+const dataList: { key: React.Key; title: string }[] = [];
+const generateList = (data: TreeDataNode[]) => {
+  for (let i = 0; i < data.length; i++) {
+    const node = data[i];
+    const { key } = node;
+    dataList.push({ key, title: key as string });
+    if (node.children) {
+      generateList(node.children);
+    }
+  }
+};
+generateList(defaultData);
 
-export default function BasicSimpleTreeView() {
+const getParentKey = (key: React.Key, tree: TreeDataNode[]): React.Key => {
+  let parentKey: React.Key;
+  for (let i = 0; i < tree.length; i++) {
+    const node = tree[i];
+    if (node.children) {
+      if (node.children.some((item) => item.key === key)) {
+        parentKey = node.key;
+      } else if (getParentKey(key, node.children)) {
+        parentKey = getParentKey(key, node.children);
+      }
+    }
+  }
+  return parentKey!;
+};
+
+const App: React.FC = () => {
+  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [autoExpandParent, setAutoExpandParent] = useState(true);
+
+  const onExpand = (newExpandedKeys: React.Key[]) => {
+    setExpandedKeys(newExpandedKeys);
+    setAutoExpandParent(false);
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const newExpandedKeys = dataList
+      .map((item) => {
+        if (item.title.includes(value)) {
+          return getParentKey(item.key, defaultData);
+        }
+        return null;
+      })
+      .filter((item, i, self): item is React.Key => !!(item && self.indexOf(item) === i));
+    setExpandedKeys(newExpandedKeys);
+    setSearchValue(value);
+    setAutoExpandParent(true);
+  };
+
+  const treeData = useMemo(() => {
+    const loop = (data: TreeDataNode[]): TreeDataNode[] =>
+      data.map((item) => {
+        const strTitle = item.title as string;
+        const index = strTitle.indexOf(searchValue);
+        const beforeStr = strTitle.substring(0, index);
+        const afterStr = strTitle.slice(index + searchValue.length);
+        const title =
+          index > -1 ? (
+            <span key={item.key}>
+              {beforeStr}
+              <span className="site-tree-search-value">{searchValue}</span>
+              {afterStr}
+            </span>
+          ) : (
+            <span key={item.key}>{strTitle}</span>
+          );
+        if (item.children) {
+          return { title, key: item.key, children: loop(item.children) };
+        }
+
+        return {
+          title,
+          key: item.key,
+        };
+      });
+
+    return loop(defaultData);
+  }, [searchValue]);
+
   return (
-    <div style={{margin:'15px'}}>
-      <SimpleTreeView
-        aria-label="customized"
-        defaultExpandedItems={['1', '3']}
-        slots={{
-          expandIcon: FolderIcon,
-          collapseIcon: FolderOpenIcon,
-          endIcon: EndIcon,
-           // endIcon: CheckBoxOutlineBlankIcon,
-        }}
-        sx={{ overflowX: 'hidden', minHeight: 270, flexGrow: 1, maxWidth: 400 }}
-      >
-
-
-        <CustomTreeItem itemId="1" label="Main">
-
-          <CustomTreeItem itemId="3" label="Subtree with children">
-            <CustomTreeItem itemId="8" label="Hello" />       
-            <CustomTreeItem itemId="7" label="Sub-subtree with children">
-              <CustomTreeItem itemId="9" label="Child 1" />
-              <CustomTreeItem itemId="10" label="Child 2" />
-              <CustomTreeItem itemId="11" label="Child 3" />
-            </CustomTreeItem>
-          </CustomTreeItem>
-        </CustomTreeItem>
-      </SimpleTreeView>
-
-      </div>
+    <div>
+      <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={onChange} />
+      <Tree
+        onExpand={onExpand}
+        expandedKeys={expandedKeys}
+        autoExpandParent={autoExpandParent}
+        treeData={treeData}
+      />
+    </div>
   );
-}
+};
+
+export default App;

@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { MapContainer, TileLayer, GeoJSON, Polygon, Marker, Popup, ImageOverlay} from "react-leaflet";
-import L from "leaflet";
-import type { LatLngExpression } from "leaflet";
-import type { FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
+// import React, { useEffect, useState, useRef } from "react";
+import { MapContainer, TileLayer, GeoJSON} from "react-leaflet";
+// import { MapContainer, TileLayer, GeoJSON, Polygon, Marker, Popup, ImageOverlay} from "react-leaflet";
+// import L from "leaflet";
+// import type { LatLngExpression } from "leaflet";
+import type { FeatureCollection } from 'geojson'; 
+// import type { FeatureCollection, Feature, Geometry, GeoJsonObject } from 'geojson'; 
 import "leaflet/dist/leaflet.css";
 import oceanPoly from '../../data/Ocean.json';
 
@@ -14,13 +16,13 @@ export default function MainMap() {
   // const oceanPoly: FeatureCollection = require('../../src/data/s2.json');
   
 
-    const bounds: L.LatLngBoundsExpression = [[54.975, 29.975], [80.025, 100.025]];
+    // const bounds: L.LatLngBoundsExpression = [[54.975, 29.975], [80.025, 100.025]];
 
-    const polygon: LatLngExpression[] | LatLngExpression[][] | LatLngExpression[][][] = [
-      [51.515, 7],
-      [70.52, 55],
-      [51.52, 15],
-    ];
+    // const polygon: LatLngExpression[] | LatLngExpression[][] | LatLngExpression[][][] = [
+    //   [51.515, 7],
+    //   [70.52, 55],
+    //   [51.52, 15],
+    // ];
 
   
     return (

@@ -32,10 +32,10 @@ export default function SideMenu({ open, projection, onProjectionChange, onClose
           name="projection-radio-group"
           value={projection}
           onChange={onProjectionChange}
+          defaultValue="Lambert Conic"
         >
           <FormControlLabel value="WGS84" control={<Radio />} label="WGS84" />
           <FormControlLabel value="Lambert Conic" control={<Radio />} label="Lambert Conic" />
-          <FormControlLabel value="Lambert Conic Zone" control={<Radio />} label="Lambert Conic Zone" />
         </RadioGroup>
       </FormControl>
     </nav>
